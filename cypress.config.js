@@ -1,5 +1,5 @@
 const { defineConfig } = require('cypress');
-const { addMochawesome } = require('cypress-mochawesome-reporter/plugin');
+const { addMochawesome } = require('cypress/plugin');
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
