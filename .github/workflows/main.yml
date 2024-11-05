@@ -3,7 +3,7 @@ on: [push]
 jobs:
     cypress-run:
 runs-on: ubuntu-20.04
-name: Cypress Test and Deploy to GitHub Pages 
+name: Cypress Test and Deploy to GitHub Pages
 steps:
     # Checkout the code
 - uses: actions/checkout@v3
