@@ -23,17 +23,16 @@ jobs:
       # Run Cypress with Mochawesome reporter
       - name: Run Cypress tests
         env:
-          CYPRESS_firstName: Joe
-          CYPRESS_lastName: Smith
+          CYPRESS_firstName: Kazal Chandra 
+          CYPRESS_lastName: Barman
         run: |
           npx cypress run --reporter cypress-mochawesome-reporter --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true
 
       # Generate HTML report from Mochawesome JSON
       - name: Generate HTML report
         run: |
-          npx mochawesome-merge cypress/reports/*.json > mochawesome.json
-          npx marge mochawesome.json --reportDir ./cypress/reports --inline
-
+            npx mochawesome-merge cypress/reports/*.json -o cypress/reports/report.json
+            npx marge cypress/reports/report.json --reportDir ./cypress/reports --inline
       # Upload screenshots on failures
       - uses: actions/upload-artifact@v3
         if: failure()
