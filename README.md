@@ -32,8 +32,8 @@ This project provides a comprehensive suite of automated tests for the DemoBlaze
 ### Installation
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/denisbab/DemoBlaze-Cypress-JS-Test-Automation.git
-   cd DemoBlaze-Cypress-JS-Test-Automation
+   git clone https://github.com/kazalbrur/DemoBlaze-Cypress-Test-Automation.git
+   cd DemoBlaze-Cypress-Test-Automation
    ```
 
 2. **Install dependencies:**
@@ -77,7 +77,7 @@ module.exports = {
 The directory structure is organized as follows:
 
 ```
-DemoBlaze-Cypress-JS-Test-Automation
+DemoBlaze-Cypress-Test-Automation
 │
 ├── cypress/                    # Cypress test directory
 │   ├── e2e/                    # Test cases by feature
