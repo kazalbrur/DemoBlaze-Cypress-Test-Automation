@@ -1,37 +1,37 @@
 name: Artifacts and Pages Deployment
 on: [push]
 jobs:
-    cypress-run:
-runs-on: ubuntu-20.04
-name: Cypress Test and Deploy to GitHub Pages
-steps:
-    # Checkout the code
-- uses: actions/checkout@v3
+  cypress-run:
+    runs-on: ubuntu-20.04
+    name: Cypress Test and Deploy to GitHub Pages
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v3
 
-# Set up Node.js
-- name: Setup Node.js
-uses: actions/setup-node@v3
-with:
-node-version: '16'
+      # Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-# Install dependencies, including Cypress and Mochawesome reporter
-- name: Install dependencies
-run: |
-npm install
-npm install cypress-mochawesome-reporter
+      # Install dependencies, including Cypress and Mochawesome reporter
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install cypress-mochawesome-reporter
 
-# Run Cypress with Mochawesome reporter
-- name: Run Cypress tests
-env:
-    CYPRESS_firstName: Joe
-lastName: Smith
-run: |
-npx cypress run --reporter cypress-mochawesome-reporter --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true
+      # Run Cypress with Mochawesome reporter
+      - name: Run Cypress tests
+        env:
+          CYPRESS_firstName: Joe
+          CYPRESS_lastName: Smith
+        run: |
+          npx cypress run --reporter cypress-mochawesome-reporter --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true
 
-# Generate HTML report from Mochawesome JSON
-- name: Generate HTML report
-run: |
-npx mochawesome-merge cypress/reports/*.json > mochawesome.json
+      # Generate HTML report from Mochawesome JSON
+      - name: Generate HTML report
+        run: |
+          npx mochawesome-merge cypress/reports/*.json > mochawesome.json
           npx marge mochawesome.json --reportDir ./cypress/reports --inline
 
       # Upload screenshots on failures
