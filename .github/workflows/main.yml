@@ -71,6 +71,6 @@ jobs:
       - name: Enable GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.CYPRESS_TOKEN }}
           publish_dir: ./cypress/reports
           publish_branch: gh-pages
