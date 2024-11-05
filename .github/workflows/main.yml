@@ -28,6 +28,7 @@ jobs:
           CYPRESS_lastName: Barman
         run: |
           npx cypress run --reporter cypress-mochawesome-reporter --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true
+          echo "Cypress test execution completed."
 
       # List reports to verify JSON output
       - name: List reports
@@ -37,6 +38,7 @@ jobs:
       - name: Generate HTML report
         run: |
           if ls cypress/reports/*.json 1> /dev/null 2>&1; then
+            echo "Merging JSON reports..."
             npx mochawesome-merge cypress/reports/*.json -o cypress/reports/report.json
             npx marge cypress/reports/report.json --reportDir ./cypress/reports --inline
           else
@@ -62,9 +64,9 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.CYPRESS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports
           publish_branch: gh-pages
           force_orphan: true
-          user_name: 'kazalbrur'
+          user_name: 'Kazal Chandra'
           user_email: 'kcb.brurcse42@gmail.com'
