@@ -1,4 +1,4 @@
-name: Artifacts and Pages Deployment
+name: Cypress Artifacts and Pages Deployment
 on: [push]
 jobs:
   cypress-run:
