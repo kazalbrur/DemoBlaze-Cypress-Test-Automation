@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install cypress-mochawesome-reporter
+          npm install cypress cypress-mochawesome-reporter --save-dev
           mkdir -p cypress/reports # Ensure reports directory exists
 
       # Run Cypress with Mochawesome reporter
