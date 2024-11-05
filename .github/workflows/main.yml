@@ -14,11 +14,12 @@ jobs:
         with:
           node-version: '16'
 
-      # Install dependencies, including Cypress and Mochawesome reporter
+      # Install dependencies and ensure the report directory exists
       - name: Install dependencies
         run: |
           npm install
           npm install cypress-mochawesome-reporter
+          mkdir -p cypress/reports
 
       # Run Cypress with Mochawesome reporter
       - name: Run Cypress tests
@@ -28,11 +29,21 @@ jobs:
         run: |
           npx cypress run --reporter cypress-mochawesome-reporter --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true
 
+      # List reports to verify JSON output
+      - name: List reports
+        run: ls -la cypress/reports
+
       # Generate HTML report from Mochawesome JSON
       - name: Generate HTML report
         run: |
+          if ls cypress/reports/*.json 1> /dev/null 2>&1; then
             npx mochawesome-merge cypress/reports/*.json -o cypress/reports/report.json
             npx marge cypress/reports/report.json --reportDir ./cypress/reports --inline
+          else
+            echo "No JSON reports found, skipping report generation."
+            exit 1
+          fi
+
       # Upload screenshots on failures
       - uses: actions/upload-artifact@v3
         if: failure()
@@ -49,27 +60,11 @@ jobs:
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        if: success()
-        run: |
-          # Set up Git for deployment
-          git config --global user.name "kazalbrur"
-          git config --global user.email "kcb.brurcse42@gmail.com"
-
-          # Create a `gh-pages` branch if it doesn’t exist
-          git fetch origin
-          git switch --orphan gh-pages || git switch gh-pages
-
-          # Copy the report to the root of the gh-pages branch
-          cp -r cypress/reports/*.html index.html
-
-          # Commit and push the report to GitHub Pages
-          git add index.html
-          git commit -m "Deploy Cypress test report to GitHub Pages"
-          git push --force origin gh-pages
-
-      - name: Enable GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.CYPRESS_TOKEN }}
           publish_dir: ./cypress/reports
           publish_branch: gh-pages
+          force_orphan: true
+          user_name: 'kazalbrur'
+          user_email: 'kcb.brurcse42@gmail.com'
