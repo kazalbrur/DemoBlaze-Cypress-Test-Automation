@@ -16,3 +16,9 @@ module.exports = defineConfig({
     },
   },
 });
+
+const { addMochawesome } = require('cypress-mochawesome-reporter/plugin');
+
+module.exports = (on, config) => {
+  addMochawesome(on);
+};
