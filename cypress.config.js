@@ -13,7 +13,8 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'https://www.demoblaze.com',
     setupNodeEvents(on, config) {
-      addMochawesome(on); // Correctly set up the Mochawesome reporter
+      addMochawesome(on); // Properly set up Mochawesome reporter
+      return config; // Ensure to return the config object
     },
   },
 });
